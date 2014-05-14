@@ -32,7 +32,7 @@ class QueueManager extends \Object
         if (!is_null($job)) {
 
             try {
-                $job->fire();
+                $job->run();
 
                 $job->delete();
 

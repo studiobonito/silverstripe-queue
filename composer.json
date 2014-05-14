@@ -24,6 +24,5 @@
     },
     "suggest": {
         "pda/pheanstalk": "Allows use of the Beanstalkd driver"
-    },
-    "target-dir": "queue"
+    }
 }

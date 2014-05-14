@@ -1,0 +1,4 @@
+Injector:
+  StudioBonito\SilverStripe\Queue\Tasks\ProcessQueueTask:
+    constructor:
+      0: '%$StudioBonito\SilverStripe\Queue\QueueManager'

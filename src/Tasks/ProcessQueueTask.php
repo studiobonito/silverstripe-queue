@@ -11,6 +11,11 @@ use StudioBonito\SilverStripe\Queue\QueueManager;
  */
 class ProcessQueueTask extends \BuildTask
 {
+    /**
+     * Task title used in web interface.
+     *
+     * @var string
+     */
     protected $title = 'Process task queue';
 
     /**
@@ -19,11 +24,21 @@ class ProcessQueueTask extends \BuildTask
      */
     protected $description = 'Process the next job on a queue.';
 
+    /**
+     * QueueManager instance.
+     *
+     * @var QueueManager
+     */
     protected $manager;
 
-    public function __construct()
+    /**
+     * Ensure that the QueueManager instance gets injected.
+     *
+     * @param QueueManager $manager
+     */
+    public function __construct(QueueManager $manager)
     {
-        $this->manager = QueueManager::create();
+        $this->manager = $manager;
     }
 
     /**

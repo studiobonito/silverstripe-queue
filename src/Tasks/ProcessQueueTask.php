@@ -1,4 +1,4 @@
-<?php namespace StudioBonito\SilverStripe\Queue\Task;
+<?php namespace StudioBonito\SilverStripe\Queue\Tasks;
 
 use StudioBonito\SilverStripe\Queue\QueueManager;
 

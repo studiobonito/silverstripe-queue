@@ -9,7 +9,7 @@
  */
 interface QueueInterface
 {
-    public function push($job, $data = null, $queue = 'default');
+    public function push($job, $data = null, $queue = null);
 
-    public function pop($queue = 'default');
+    public function pop($queue = null);
 }

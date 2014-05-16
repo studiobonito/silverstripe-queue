@@ -37,7 +37,7 @@ class Worker
      *
      * @return void
      */
-    public function pop($connectionName, $queue = 'default', $delay = 0)
+    public function pop($connectionName, $queue = null, $delay = 0)
     {
         $connection = $this->manager->connection($connectionName);
 

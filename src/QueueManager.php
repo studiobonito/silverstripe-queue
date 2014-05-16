@@ -29,7 +29,7 @@ class QueueManager extends \Object
      * @return \StudioBonito\SilverStripe\Queue\QueueManager
      */
     public static function inst() {
-        return \Injector::inst()->get('QueueManager');
+        return \Injector::inst()->get('StudioBonito\SilverStripe\Queue\QueueManager');
     }
 
     /**

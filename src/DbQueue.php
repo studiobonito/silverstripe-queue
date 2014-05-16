@@ -21,8 +21,10 @@ class DbQueue extends AbstractQueue implements QueueInterface
 
     public function pop($queue = 'default')
     {
-        $jobQueue = JobQueue::get()->filter('Queue', $queue)->first();
+        $job = JobQueue::get()->filter('Queue', $queue)->first();
 
-        return new DbJob($jobQueue, $queue);
+        if ($job instanceof JobQueue) {
+            return new DbJob($job, $queue);
+        }
     }
 }

@@ -1,0 +1,4 @@
+Injector:
+  StudioBonito\SilverStripe\Queue\Worker:
+    constructor:
+      0: '%$StudioBonito\SilverStripe\Queue\QueueManager'

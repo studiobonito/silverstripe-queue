@@ -9,6 +9,11 @@
  */
 class QueueManager extends \Object
 {
+    /**
+     * The array of resolved queue connections.
+     *
+     * @var array
+     */
     protected $connectors = array();
 
     /**
@@ -18,51 +23,23 @@ class QueueManager extends \Object
      */
     protected $connections = array();
 
-    public function __construct(array $connectors)
-    {
-        $this->connectors = $connectors;
-    }
-
-    public function pop($connectionName, $queue = 'default', $delay = 0)
-    {
-        $connection = $this->connection($connectionName);
-
-        $job = $this->getNextJob($connection, $queue);
-
-        if (!is_null($job)) {
-
-            try {
-                $job->run();
-
-                $job->delete();
-
-                return array('job' => $job, 'failed' => false);
-            } catch (\Exception $exception) {
-                // TODO: Manage releasing the job if it's not deleted
-                throw $exception;
-            }
-        } else {
-            sleep($delay);
-
-            return array('job' => null, 'failed' => false);
-        }
+    /**
+     * Fetch the current instance of the queue manager.
+     *
+     * @return \StudioBonito\SilverStripe\Queue\QueueManager
+     */
+    public static function inst() {
+        return \Injector::inst()->get('StudioBonito\SilverStripe\Queue\QueueManager');
     }
 
     /**
-     * Get the next job from the queue connection.
+     * Use DI to pass in the connectors
      *
-     * @param  \StudioBonito\SilverStripe\Queue\Queue $connection
-     * @param  string                                 $queue
-     *
-     * @return \StudioBonito\SilverStripe\Queue\Jobs\JobInterface|null
+     * @param array $connectors
      */
-    protected function getNextJob($connection, $queue)
+    public function __construct(array $connectors)
     {
-        if (is_null($queue)) return $connection->pop();
-
-        foreach (explode(',', $queue) as $queue) {
-            if (!is_null($job = $connection->pop($queue))) return $job;
-        }
+        $this->connectors = $connectors;
     }
 
     /**

@@ -2,7 +2,9 @@ StudioBonito\SilverStripe\Queue\QueueManager:
   default: 'db'
   db:
     driver: 'db'
+    queue: 'default'
   beanstalkd:
     driver: 'beanstalkd'
     host: 'localhost'
+    queue: 'default'
     ttr: 60

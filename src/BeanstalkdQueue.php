@@ -59,7 +59,7 @@ class BeanstalkdQueue extends AbstractQueue implements QueueInterface
      *
      * @return mixed
      */
-    public function push($job, $data = null, $queue = 'default')
+    public function push($job, $data = null, $queue = null)
     {
         return $this->pushRaw($this->createPayload($job, $data), $queue);
     }
@@ -83,7 +83,7 @@ class BeanstalkdQueue extends AbstractQueue implements QueueInterface
         );
     }
 
-    public function pop($queue = 'default')
+    public function pop($queue = null)
     {
         $queue = $this->getQueue($queue);
 

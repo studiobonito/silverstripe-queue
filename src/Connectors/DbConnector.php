@@ -20,6 +20,8 @@ class DbConnector implements ConnectorInterface
      */
     public function connect(array $config)
     {
-        return DbQueue::create();
+        $queue = isset($config['queue']) ? $config['queue'] : 'default';
+
+        return DbQueue::create($queue);
     }
 } 

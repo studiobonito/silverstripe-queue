@@ -24,6 +24,15 @@ class QueueManager extends \Object
     protected $connections = array();
 
     /**
+     * Fetch the current instance of the queue manager.
+     *
+     * @return \StudioBonito\SilverStripe\Queue\QueueManager
+     */
+    public static function inst() {
+        return \Injector::inst()->get('QueueManager');
+    }
+
+    /**
      * Use DI to pass in the connectors
      *
      * @param array $connectors

@@ -25,20 +25,20 @@ class ProcessQueueTask extends \BuildTask
     protected $description = 'Process the next job on a queue.';
 
     /**
-     * QueueManager instance.
+     * The queue worker instance.
      *
-     * @var QueueManager
+     * @var \StudioBonito\SilverStripe\Queue\Worker
      */
-    protected $manager;
+    protected $worker;
 
     /**
      * Ensure that the QueueManager instance gets injected.
      *
-     * @param QueueManager $manager
+     * @param \StudioBonito\SilverStripe\Queue\Worker $worker
      */
-    public function __construct(QueueManager $manager)
+    public function __construct(QueueManager $worker)
     {
-        $this->manager = $manager;
+        $this->worker = $worker;
     }
 
     /**
@@ -53,6 +53,6 @@ class ProcessQueueTask extends \BuildTask
 
         $delay = $request->requestVar('delay') ? : 3;
 
-        $this->manager->pop($connection, $queue, $delay);
+        $this->worker->pop($connection, $queue, $delay);
     }
 }

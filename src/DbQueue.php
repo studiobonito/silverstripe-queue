@@ -35,11 +35,13 @@ class DbQueue extends AbstractQueue implements QueueInterface
     {
         $payload = $this->createPayload($job, $data);
 
-        JobQueue::create(array('Queue' => $queue, 'Payload' => $payload))->write();
+        JobQueue::create(array('Queue' => $this->getQueue($queue), 'Payload' => $payload))->write();
     }
 
     public function pop($queue = null)
     {
+        $queue = $this->getQueue($queue);
+
         $job = JobQueue::get()->filter('Queue', $queue)->first();
 
         if ($job instanceof JobQueue) {

@@ -47,14 +47,24 @@ class ProcessQueueTask extends \BuildTask
      */
     public function run($request)
     {
-        $connection = $request->requestVar('connection') ? : null;
+        $connection = $request->getVar('connection');
 
-        $queue = $request->requestVar('queue') ? : 'default';
+        $queue = $request->getVar('queue');
 
-        $delay = $request->requestVar('delay') ? : 3;
+        $delay = $request->getVar('delay') ? : 0;
 
-        $this->worker->pop($connection, $queue, $delay);
+        $memory = $request->getVar('memory') ? : 128;
 
-        echo 'Worker has finished processing the job.';
+        $sleep = $request->getVar('sleep') ? : 3;
+
+        $tries = $request->getVar('tries') ? : 0;
+
+        $daemon = $request->getVar('daemon');
+
+        if ($daemon) {
+            return $this->worker->daemon($connection, $queue, $delay, $memory, $sleep, $tries);
+        } else {
+            return $this->worker->pop($connection, $queue, $delay, $sleep, $tries);
+        }
     }
 }

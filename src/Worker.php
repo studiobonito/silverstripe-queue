@@ -27,6 +27,13 @@ class Worker
     protected $failer;
 
     /**
+     * Flag used when running as a daemon.
+     *
+     * @var bool
+     */
+    protected $stop = false;
+
+    /**
      * Create a new queue worker.
      *
      * @param  \StudioBonito\SilverStripe\Queue\QueueManager $manager
@@ -37,6 +44,49 @@ class Worker
     {
         $this->manager = $manager;
         $this->failer = $failer;
+    }
+
+    /**
+     * Listen to the given queue in a loop.
+     *
+     * @param  string $connectionName
+     * @param  string $queue
+     * @param  int    $delay
+     * @param  int    $memory
+     * @param  int    $sleep
+     * @param  int    $maxTries
+     *
+     * @return array
+     */
+    public function daemon($connectionName, $queue = null, $delay = 0, $memory = 128, $sleep = 3, $maxTries = 0)
+    {
+        while (true) {
+            if (!$this->stop) {
+                $this->runNextJobForDaemon($connectionName, $queue, $delay, $sleep, $maxTries);
+            } else {
+                $this->sleep($sleep);
+            }
+
+            if ($this->memoryExceeded($memory)) {
+                $this->stop();
+            }
+        }
+    }
+
+    /**
+     * Run the next job for the daemon worker.
+     *
+     * @param  string $connectionName
+     * @param  string $queue
+     * @param  int    $delay
+     * @param  int    $sleep
+     * @param  int    $maxTries
+     *
+     * @return void
+     */
+    protected function runNextJobForDaemon($connectionName, $queue, $delay, $sleep, $maxTries)
+    {
+        $this->pop($connectionName, $queue, $delay, $sleep, $maxTries);
     }
 
     /**
@@ -97,6 +147,7 @@ class Worker
     {
         if ($maxTries > 0 && $job->attempts() > $maxTries) {
             $this->logFailedJob($connection, $job);
+
             return;
         }
 
@@ -131,6 +182,30 @@ class Worker
 
             $job->delete();
         }
+    }
+
+    /**
+     * Determine if the memory limit has been exceeded.
+     *
+     * @param  int $memoryLimit
+     *
+     * @return bool
+     */
+    public function memoryExceeded($memoryLimit)
+    {
+        return (memory_get_usage() / 1024 / 1024) >= $memoryLimit;
+    }
+
+    /**
+     * Stop listening and bail out of the script.
+     *
+     * @return void
+     */
+    public function stop()
+    {
+        $this->stop = true;
+
+        die;
     }
 
     /**

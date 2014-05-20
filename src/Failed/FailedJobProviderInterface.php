@@ -1,11 +1,5 @@
 <?php namespace StudioBonito\SilverStripe\Queue\Failed;
 
-/**
- * FailedJobProviderInterface.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- */
 interface FailedJobProviderInterface
 {
     /**

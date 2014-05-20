@@ -4,13 +4,6 @@ use Convert;
 use StudioBonito\SilverStripe\Queue\DbQueue;
 use StudioBonito\SilverStripe\Queue\Models\JobQueue;
 
-/**
- * DbJob.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue\Jobs
- */
 class DbJob extends AbstractJob implements JobInterface
 {
     /**

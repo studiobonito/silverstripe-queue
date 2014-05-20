@@ -2,13 +2,6 @@
 
 use StudioBonito\SilverStripe\Queue\DbQueue;
 
-/**
- * DbConnector.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue\Connectors
- */
 class DbConnector implements ConnectorInterface
 {
     /**

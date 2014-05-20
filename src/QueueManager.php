@@ -1,12 +1,5 @@
 <?php namespace StudioBonito\SilverStripe\Queue;
 
-/**
- * QueueManager.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue
- */
 class QueueManager extends \Object
 {
     /**

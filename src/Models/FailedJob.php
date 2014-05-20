@@ -1,11 +1,5 @@
 <?php namespace StudioBonito\SilverStripe\Queue\Models;
 
-/**
- * FailedJob.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- */
 class FailedJob extends \DataObject
 {
     /**

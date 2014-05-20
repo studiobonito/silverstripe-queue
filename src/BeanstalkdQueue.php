@@ -4,13 +4,6 @@ use Pheanstalk_Job;
 use Pheanstalk_Pheanstalk as Pheanstalk;
 use StudioBonito\SilverStripe\Queue\Jobs\BeanstalkdJob;
 
-/**
- * BeanstalkdQueue.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue
- */
 class BeanstalkdQueue extends AbstractQueue implements QueueInterface
 {
     /**

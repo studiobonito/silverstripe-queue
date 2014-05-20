@@ -217,6 +217,6 @@ class Worker
      */
     public function sleep($seconds)
     {
-        sleep($seconds);
+        usleep($seconds * 1000000);
     }
 } 

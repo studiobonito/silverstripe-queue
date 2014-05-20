@@ -2,3 +2,4 @@ Injector:
   StudioBonito\SilverStripe\Queue\Worker:
     constructor:
       0: '%$StudioBonito\SilverStripe\Queue\QueueManager'
+      1: '%$StudioBonito\SilverStripe\Queue\Failed\DbFailedJobProvider'

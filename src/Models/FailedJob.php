@@ -1,13 +1,12 @@
 <?php namespace StudioBonito\SilverStripe\Queue\Models;
 
 /**
- * JobQueue.
+ * FailedJob.
  *
  * @author       Tom Densham <tom.densham@studiobonito.co.uk>
  * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue\Model
  */
-class JobQueue extends \DataObject
+class FailedJob extends \DataObject
 {
     /**
      * List of database fields. {@link DataObject::$db}
@@ -15,8 +14,8 @@ class JobQueue extends \DataObject
      * @var array
      */
     private static $db = array(
-        'Queue'    => 'Varchar(255)',
-        'Payload'  => 'Text',
-        'RunAfter' => 'Int'
+        'Queue'   => 'Varchar(255)',
+        'Payload' => 'Text',
+        'Failed'  => 'Datetime'
     );
 }

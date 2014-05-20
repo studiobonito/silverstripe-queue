@@ -54,5 +54,7 @@ class ProcessQueueTask extends \BuildTask
         $delay = $request->requestVar('delay') ? : 3;
 
         $this->worker->pop($connection, $queue, $delay);
+
+        echo 'Worker has finished processing the job.';
     }
 }

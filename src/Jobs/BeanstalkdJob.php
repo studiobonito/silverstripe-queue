@@ -3,13 +3,6 @@
 use Pheanstalk_Job;
 use Pheanstalk_Pheanstalk as Pheanstalk;
 
-/**
- * BeanstalkdJob.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue\Jobs
- */
 class BeanstalkdJob extends AbstractJob implements JobInterface
 {
     /**

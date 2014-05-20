@@ -3,13 +3,6 @@
 use StudioBonito\SilverStripe\Queue\Jobs\DbJob;
 use StudioBonito\SilverStripe\Queue\Models\JobQueue;
 
-/**
- * DbQueue.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue
- */
 class DbQueue extends AbstractQueue implements QueueInterface
 {
     /**

@@ -3,13 +3,6 @@
 use Pheanstalk_Pheanstalk as Pheanstalk;
 use StudioBonito\SilverStripe\Queue\BeanstalkdQueue;
 
-/**
- * BeanstalkdConnector.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue\Connectors
- */
 class BeanstalkdConnector implements ConnectorInterface
 {
     /**

@@ -3,13 +3,6 @@
 use StudioBonito\SilverStripe\Queue\Failed\FailedJobProviderInterface;
 use StudioBonito\SilverStripe\Queue\Jobs\AbstractJob;
 
-/**
- * Worker.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue
- */
 class Worker
 {
     /**

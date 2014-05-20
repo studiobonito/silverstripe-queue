@@ -2,13 +2,6 @@
 
 use StudioBonito\SilverStripe\Queue\QueueManager;
 
-/**
- * ProcessQueueTask.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- * @package      StudioBonito\SilverStripe\Queue\Task
- */
 class ProcessQueueTask extends \BuildTask
 {
     /**

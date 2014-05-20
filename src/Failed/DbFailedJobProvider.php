@@ -2,12 +2,6 @@
 
 use StudioBonito\SilverStripe\Queue\Models\FailedJob;
 
-/**
- * DbFailedJobProvider.
- *
- * @author       Tom Densham <tom.densham@studiobonito.co.uk>
- * @copyright    Studio Bonito Ltd.
- */
 class DbFailedJobProvider implements FailedJobProviderInterface
 {
     /**

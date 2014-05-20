@@ -1,5 +1,8 @@
 <?php namespace StudioBonito\SilverStripe\Queue;
 
+use StudioBonito\SilverStripe\Queue\Failed\FailedJobProviderInterface;
+use StudioBonito\SilverStripe\Queue\Jobs\AbstractJob;
+
 /**
  * Worker.
  *
@@ -17,15 +20,23 @@ class Worker
     protected $manager;
 
     /**
+     * The failed job provider implementation.
+     *
+     * @var \StudioBonito\SilverStripe\Queue\Failed\FailedJobProviderInterface
+     */
+    protected $failer;
+
+    /**
      * Create a new queue worker.
      *
      * @param  \StudioBonito\SilverStripe\Queue\QueueManager $manager
      *
      * @return void
      */
-    public function __construct(QueueManager $manager)
+    public function __construct(QueueManager $manager, FailedJobProviderInterface $failer = null)
     {
         $this->manager = $manager;
+        $this->failer = $failer;
     }
 
     /**
@@ -34,27 +45,22 @@ class Worker
      * @param  string $connectionName
      * @param  string $queue
      * @param  int    $delay
+     * @param  int    $memory
+     * @param  int    $sleep
+     * @param  int    $maxTries
      *
      * @return void
      */
-    public function pop($connectionName, $queue = null, $delay = 0)
+    public function pop($connectionName, $queue = null, $delay = 0, $memory = 128, $sleep = 3, $maxTries = 0)
     {
         $connection = $this->manager->connection($connectionName);
 
         $job = $this->getNextJob($connection, $queue);
 
         if (!is_null($job)) {
-
-            try {
-                $job->run();
-
-                $job->delete();
-            } catch (\Exception $exception) {
-                // TODO: Manage releasing the job if it's not deleted
-                throw $exception;
-            }
+            $this->process($this->manager->getName($connectionName), $job, $maxTries, $delay);
         } else {
-            sleep($delay);
+            $this->sleep($sleep);
         }
     }
 
@@ -73,5 +79,69 @@ class Worker
         foreach (explode(',', $queue) as $queue) {
             if (!is_null($job = $connection->pop($queue))) return $job;
         }
+    }
+
+    /**
+     * Process a given job from the queue.
+     *
+     * @param  string                                            $connection
+     * @param  \StudioBonito\SilverStripe\Queue\Jobs\AbstractJob $job
+     * @param  int                                               $maxTries
+     * @param  int                                               $delay
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function process($connection, AbstractJob $job, $maxTries = 0, $delay = 0)
+    {
+        if ($maxTries > 0 && $job->attempts() > $maxTries) {
+            $this->logFailedJob($connection, $job);
+            return;
+        }
+
+        try {
+            // First we will fire off the job. Once it is done we will see if it will
+            // be auto-deleted after processing and if so we will go ahead and run
+            // the delete method on the job. Otherwise we will just keep moving.
+            $job->run();
+
+            if ($job->autoDelete()) $job->delete();
+        } catch (\Exception $exception) {
+            // If we catch an exception, we will attempt to release the job back onto
+            // the queue so it is not lost. This will let is be retried at a later
+            // time by another listener (or the same one). We will do that here.
+            if (!$job->isDeleted()) $job->release($delay);
+            throw $exception;
+        }
+    }
+
+    /**
+     * Log a failed job into storage.
+     *
+     * @param  string                                            $connection
+     * @param  \StudioBonito\SilverStripe\Queue\Jobs\AbstractJob $job
+     *
+     * @return void
+     */
+    protected function logFailedJob($connection, AbstractJob $job)
+    {
+        if ($this->failer) {
+            $this->failer->log($connection, $job->getQueue(), $job->getRawPayload());
+
+            $job->delete();
+        }
+    }
+
+    /**
+     * Sleep the script for a given number of seconds.
+     *
+     * @param  int $seconds
+     *
+     * @return void
+     */
+    public function sleep($seconds)
+    {
+        sleep($seconds);
     }
 } 

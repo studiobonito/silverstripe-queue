@@ -28,7 +28,8 @@ class QueueManager extends \Object
      *
      * @return \StudioBonito\SilverStripe\Queue\QueueManager
      */
-    public static function inst() {
+    public static function inst()
+    {
         return \Injector::inst()->get('StudioBonito\SilverStripe\Queue\QueueManager');
     }
 
@@ -40,6 +41,17 @@ class QueueManager extends \Object
     public function __construct(array $connectors)
     {
         $this->connectors = $connectors;
+    }
+
+    /**
+     * Determine if the driver is connected.
+     *
+     * @param  string  $name
+     * @return bool
+     */
+    public function connected($name = null)
+    {
+        return isset($this->connections[$name ?: $this->getDefaultDriver()]);
     }
 
     /**
@@ -103,6 +115,28 @@ class QueueManager extends \Object
     public function getDefaultDriver()
     {
         return $this->config()->get('default');
+    }
+
+    /**
+     * Set the name of the default queue connection.
+     *
+     * @param  string  $name
+     * @return void
+     */
+    public function setDefaultDriver($name)
+    {
+        $this->config()->set('default', $name);
+    }
+
+    /**
+     * Get the full name for the given connection.
+     *
+     * @param  string  $connection
+     * @return string
+     */
+    public function getName($connection = null)
+    {
+        return $connection ?: $this->getDefaultDriver();
     }
 
     /**

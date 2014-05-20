@@ -83,6 +83,32 @@ class BeanstalkdQueue extends AbstractQueue implements QueueInterface
         );
     }
 
+    /**
+     * Push a new job onto the queue after a delay.
+     *
+     * @param  \DateTime|int $delay
+     * @param  string        $job
+     * @param  mixed         $data
+     * @param  string        $queue
+     *
+     * @return mixed
+     */
+    public function later($delay, $job, $data = '', $queue = null)
+    {
+        $payload = $this->createPayload($job, $data);
+
+        $pheanstalk = $this->pheanstalk->useTube($this->getQueue($queue));
+
+        return $pheanstalk->put($payload, Pheanstalk::DEFAULT_PRIORITY, $this->getSeconds($delay));
+    }
+
+    /**
+     * Pop the next job off of the queue.
+     *
+     * @param  string $queue
+     *
+     * @return \StudioBonito\SilverStripe\Queue\Jobs\AbstractJob|null
+     */
     public function pop($queue = null)
     {
         $queue = $this->getQueue($queue);
@@ -104,5 +130,15 @@ class BeanstalkdQueue extends AbstractQueue implements QueueInterface
     public function getQueue($queue)
     {
         return $queue ? : $this->default;
+    }
+
+    /**
+     * Get the underlying Pheanstalk instance.
+     *
+     * @return Pheanstalk
+     */
+    public function getPheanstalk()
+    {
+        return $this->pheanstalk;
     }
 } 

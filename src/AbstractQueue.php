@@ -2,9 +2,17 @@
 
 use Convert;
 use DateTime;
+use Injector;
 
 abstract class AbstractQueue extends \Object
 {
+    /**
+     * The injector instance.
+     *
+     * @var \Injector
+     */
+    protected $injector;
+
     /**
      * Create a payload string from the given job and data.
      *
@@ -60,5 +68,17 @@ abstract class AbstractQueue extends \Object
     public function getTime()
     {
         return time();
+    }
+
+    /**
+     * Set the injector instance.
+     *
+     * @param  \Injector $injector
+     *
+     * @return void
+     */
+    public function setInjector(Injector $injector)
+    {
+        $this->injector = $injector;
     }
 }

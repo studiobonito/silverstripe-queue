@@ -1,5 +1,7 @@
 StudioBonito\SilverStripe\Queue\QueueManager:
-  default: 'db'
+  default: 'sync'
+  sync:
+    driver: 'sync'
   db:
     driver: 'db'
     queue: 'default'

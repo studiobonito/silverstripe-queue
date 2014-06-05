@@ -1,5 +1,7 @@
 # Queue Module
 
+[![Build Status](https://travis-ci.org/studiobonito/silverstripe-queue.svg?branch=master)](https://travis-ci.org/studiobonito/silverstripe-queue)
+
 ## Overview
 
 Simple multi driver queue system. This is essentially a port of the [Laravel](http://laravel.com/) queue system.
@@ -17,6 +19,7 @@ So our thanks go to [Taylor Otwell](https://twitter.com/taylorotwell) et al for 
 
 ## Supported Backends
 
+- [x] Synchronous
 - [x] SilverStripe Database
 - [x] Beanstalkd
 - [ ] IronMQ
@@ -29,7 +32,9 @@ So our thanks go to [Taylor Otwell](https://twitter.com/taylorotwell) et al for 
 
 Run the following to add this module as a requirement and install it via composer.
 
-	$ composer require studiobonito/silverstripe-queue
+```bash
+$ composer require studiobonito/silverstripe-queue
+```
 
 ### Manual
 
@@ -85,3 +90,17 @@ class SendEmail {
     }
 }
 ```
+
+## Contributing
+
+### Unit Testing
+
+```bash
+$ composer install --prefer-dist --dev
+$ phpunit
+```
+
+## License
+
+All original work copyright of Taylor Otwell under [MIT license](http://opensource.org/licenses/MIT).
+All subsequent work copyright [Studio Bonito Ltd.](http://www.studiobonito.co.uk/) under BSD-2-Clause license.

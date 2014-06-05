@@ -1,6 +1,7 @@
 <?php namespace StudioBonito\SilverStripe\Queue\Jobs;
 
 use Convert;
+use Injector;
 use StudioBonito\SilverStripe\Queue\DbQueue;
 use StudioBonito\SilverStripe\Queue\Models\JobQueue;
 
@@ -21,17 +22,19 @@ class DbJob extends AbstractJob implements JobInterface
     /**
      * Create a new job instance.
      *
-     * @param  DbQueue  $db
-     * @param  JobQueue $job
-     * @param  string   $queue
+     * @param  \Injector $injector
+     * @param  DbQueue   $db
+     * @param  JobQueue  $job
+     * @param  string    $queue
      *
      * @return void
      */
-    function __construct(DbQueue $db, JobQueue $job, $queue)
+    function __construct(Injector $injector, DbQueue $db, JobQueue $job, $queue)
     {
         $this->db = $db;
         $this->job = $job;
         $this->queue = $queue;
+        $this->injector = $injector;
     }
 
     /**
@@ -100,6 +103,16 @@ class DbJob extends AbstractJob implements JobInterface
     public function getJobId()
     {
         return $this->job->ID;
+    }
+
+    /**
+     * Get the injector instance.
+     *
+     * @return \Injector
+     */
+    public function getInjector()
+    {
+        return $this->injector;
     }
 }
  

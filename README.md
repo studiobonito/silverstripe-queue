@@ -97,3 +97,8 @@ class SendEmail {
 $ composer install --prefer-dist --dev
 $ phpunit
 ```
+
+## License
+
+All original work copyright of Taylor Otwell under [MIT license](http://opensource.org/licenses/MIT).
+All subsequent work copyright [Studio Bonito Ltd.](http://www.studiobonito.co.uk/) under BSD-2-Clause license.

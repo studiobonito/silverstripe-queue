@@ -1,9 +1,17 @@
 <?php namespace StudioBonito\SilverStripe\Queue;
 
+use Config;
 use Injector;
 
-class QueueManager extends \Object
+class QueueManager
 {
+    /**
+     * The config instance.
+     *
+     * @var \Config_ForClass
+     */
+    protected $config;
+
     /**
      * The array of resolved queue connections.
      *
@@ -36,6 +44,8 @@ class QueueManager extends \Object
     public function __construct(array $connectors)
     {
         $this->connectors = $connectors;
+
+        $this->setConfig(Config::inst()->forClass(get_called_class()));
     }
 
     /**
@@ -81,7 +91,7 @@ class QueueManager extends \Object
      */
     protected function resolve($name)
     {
-        $config = $this->config()->get($name);
+        $config = $this->getConfig()->get($name);
 
         return $this->getConnector($config['driver'])->connect($config);
     }
@@ -105,13 +115,33 @@ class QueueManager extends \Object
     }
 
     /**
+     * Set the config instance.
+     *
+     * @param \Config_ForClass $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * Get the config instance.
+     *
+     * @return \Config_ForClass
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
      * Get the name of the default queue connection.
      *
      * @return string
      */
     public function getDefaultDriver()
     {
-        return $this->config()->get('default');
+        return $this->getConfig()->get('default');
     }
 
     /**
@@ -122,7 +152,7 @@ class QueueManager extends \Object
      */
     public function setDefaultDriver($name)
     {
-        $this->config()->set('default', $name);
+        $this->getConfig()->set('default', $name);
     }
 
     /**

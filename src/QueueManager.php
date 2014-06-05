@@ -109,7 +109,11 @@ class QueueManager
     protected function getConnector($driver)
     {
         if (isset($this->connectors[$driver])) {
-            return call_user_func($this->connectors[$driver]);
+            if ($this->connectors[$driver] instanceof ConnectorInterface) {
+                return $this->connectors[$driver];
+            } else {
+                return call_user_func($this->connectors[$driver]);
+            }
         }
 
         throw new \InvalidArgumentException("No connector for [$driver]");

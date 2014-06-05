@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="SilverStripe Queue Module : Simple multi driver queue system." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>SilverStripe Queue Module</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/studiobonito/silverstripe-queue">View on GitHub</a>
+
+          <h1 id="project_title">SilverStripe Queue Module</h1>
+          <h2 id="project_tagline">Simple multi driver queue system.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/studiobonito/silverstripe-queue/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/studiobonito/silverstripe-queue/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="queue-module" class="anchor" href="#queue-module"><span class="octicon octicon-link"></span></a>Queue Module</h1>
+
+<p><a href="https://travis-ci.org/studiobonito/silverstripe-queue"><img src="https://travis-ci.org/studiobonito/silverstripe-queue.svg?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>Simple multi driver queue system. This is essentially a port of the <a href="http://laravel.com/">Laravel</a> queue system.</p>
+
+<p><strong>Still very much a WIP not for use in production!</strong></p>
+
+<p>Although it would be better to use <code>illuminate/queue</code> directly it has too many dependancies that would replicate <code>silverstripe/framework</code> functionality at this time. By porting the code we can take advantage of SilverStripes command line framework and dependancy injection whilst still having a feature rich and multi backend queue system.</p>
+
+<p>So our thanks go to <a href="https://twitter.com/taylorotwell">Taylor Otwell</a> et al for their excellent work on <a href="http://laravel.com/">Laravel</a>.</p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>SilverStripe 3.1 or newer.</li>
+<li>
+<code>pda/pheanstalk</code> 2.1 or newer for Beanstalkd support</li>
+</ul><h2>
+<a name="supported-backends" class="anchor" href="#supported-backends"><span class="octicon octicon-link"></span></a>Supported Backends</h2>
+
+<ul>
+<li>[x] Synchronous</li>
+<li>[x] SilverStripe Database</li>
+<li>[x] Beanstalkd</li>
+<li>[ ] IronMQ</li>
+<li>[ ] Amazon SQS</li>
+<li>[ ] Redis</li>
+</ul><h2>
+<a name="installation-instructions" class="anchor" href="#installation-instructions"><span class="octicon octicon-link"></span></a>Installation Instructions</h2>
+
+<h3>
+<a name="composer" class="anchor" href="#composer"><span class="octicon octicon-link"></span></a>Composer</h3>
+
+<p>Run the following to add this module as a requirement and install it via composer.</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>composer require studiobonito/silverstripe-queue
+</pre></div>
+
+<h3>
+<a name="manual" class="anchor" href="#manual"><span class="octicon octicon-link"></span></a>Manual</h3>
+
+<p>Copy the 'queue' folder to your the root of your SilverStripe installation.</p>
+
+<h2>
+<a name="configuration-overview" class="anchor" href="#configuration-overview"><span class="octicon octicon-link"></span></a>Configuration Overview</h2>
+
+<p>Configure the queue drivers with the following YAML.</p>
+
+<div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">StudioBonito\SilverStripe\Queue\QueueManager</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span> <span class="s">'db'</span>
+    <span class="l-Scalar-Plain">db</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span> <span class="s">'db'</span>
+        <span class="l-Scalar-Plain">queue</span><span class="p-Indicator">:</span> <span class="s">'default'</span>
+    <span class="l-Scalar-Plain">beanstalkd</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span> <span class="s">'beanstalkd'</span>
+        <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="s">'localhost'</span>
+        <span class="l-Scalar-Plain">queue</span><span class="p-Indicator">:</span> <span class="s">'default'</span>
+        <span class="l-Scalar-Plain">ttr</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">60</span>
+</pre></div>
+
+<h2>
+<a name="usage-overview" class="anchor" href="#usage-overview"><span class="octicon octicon-link"></span></a>Usage Overview</h2>
+
+<h3>
+<a name="import-queuemanager" class="anchor" href="#import-queuemanager"><span class="octicon octicon-link"></span></a>Import QueueManager</h3>
+
+<p>Import the <code>QueueManager</code> class for ease of use.</p>
+
+<div class="highlight highlight-php"><pre><span class="k">use</span> <span class="nx">StudioBonito\SilverStripe\Queue\QueueManager</span><span class="p">;</span>
+
+</pre></div>
+
+<h3>
+<a name="push-a-job-onto-the-queue" class="anchor" href="#push-a-job-onto-the-queue"><span class="octicon octicon-link"></span></a>Push A Job Onto The Queue</h3>
+
+<p>Use <code>QueueManager::inst()</code> to get an instance of the <code>QueueManger</code> class and then call the <code>push()</code> method passing in the name of a job handler and an array of data.</p>
+
+<div class="highlight highlight-php"><pre><span class="nx">QueueManager</span><span class="o">::</span><span class="na">inst</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">'SendEmail'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'message'</span> <span class="o">=&gt;</span> <span class="nv">$message</span><span class="p">));</span>
+
+</pre></div>
+
+<h3>
+<a name="creating-a-job-handler" class="anchor" href="#creating-a-job-handler"><span class="octicon octicon-link"></span></a>Creating A Job Handler</h3>
+
+<p>Job handlers are simple classes that contain a <code>run</code> method with <code>$job</code> and <code>$data</code> parameters.</p>
+
+<div class="highlight highlight-php"><pre><span class="k">class</span> <span class="nc">SendEmail</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="nv">$job</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Code for processing job goes here.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<h3>
+<a name="unit-testing" class="anchor" href="#unit-testing"><span class="octicon octicon-link"></span></a>Unit Testing</h3>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>composer install --prefer-dist --dev
+<span class="nv">$ </span>phpunit
+</pre></div>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>All original work copyright of Taylor Otwell under <a href="http://opensource.org/licenses/MIT">MIT license</a>.
+All subsequent work copyright <a href="http://www.studiobonito.co.uk/">Studio Bonito Ltd.</a> under BSD-2-Clause license.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">SilverStripe Queue Module maintained by <a href="https://github.com/studiobonito">studiobonito</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

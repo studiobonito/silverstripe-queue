@@ -1,5 +1,6 @@
 <?php namespace StudioBonito\SilverStripe\Queue\Jobs;
 
+use Injector;
 use Pheanstalk_Job;
 use Pheanstalk_Pheanstalk as Pheanstalk;
 
@@ -22,16 +23,18 @@ class BeanstalkdJob extends AbstractJob implements JobInterface
     /**
      * Create a new job instance.
      *
+     * @param  \Injector      $injector
      * @param  Pheanstalk     $pheanstalk
      * @param  Pheanstalk_Job $job
      * @param  string         $queue
      *
      * @return void
      */
-    public function __construct(Pheanstalk $pheanstalk, Pheanstalk_Job $job, $queue)
+    public function __construct(Injector $injector, Pheanstalk $pheanstalk, Pheanstalk_Job $job, $queue)
     {
         $this->job = $job;
         $this->queue = $queue;
+        $this->injector = $injector;
         $this->pheanstalk = $pheanstalk;
     }
 
@@ -111,6 +114,16 @@ class BeanstalkdJob extends AbstractJob implements JobInterface
     public function getJobId()
     {
         return $this->job->getId();
+    }
+
+    /**
+     * Get the injector instance.
+     *
+     * @return \Injector
+     */
+    public function getInjector()
+    {
+        return $this->injector;
     }
 
     /**

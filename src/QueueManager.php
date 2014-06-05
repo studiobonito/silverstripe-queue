@@ -1,5 +1,7 @@
 <?php namespace StudioBonito\SilverStripe\Queue;
 
+use Injector;
+
 class QueueManager extends \Object
 {
     /**
@@ -23,7 +25,7 @@ class QueueManager extends \Object
      */
     public static function inst()
     {
-        return \Injector::inst()->get('StudioBonito\SilverStripe\Queue\QueueManager');
+        return Injector::inst()->get('StudioBonito\SilverStripe\Queue\QueueManager');
     }
 
     /**
@@ -63,6 +65,8 @@ class QueueManager extends \Object
         // not make any unnecessary connection to the various queue end-points.
         if (!isset($this->connections[$name])) {
             $this->connections[$name] = $this->resolve($name);
+
+            $this->connections[$name]->setInjector(Injector::inst());
         }
 
         return $this->connections[$name];

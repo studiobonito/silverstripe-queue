@@ -123,7 +123,7 @@ class DbQueue extends AbstractQueue implements QueueInterface
         $job = JobQueue::get()->filter(array('Queue' => $queue, 'RunAfter:LessThan' => $this->getTime()))->first();
 
         if ($job instanceof JobQueue) {
-            return new DbJob($this, $job, $queue);
+            return new DbJob($this->injector, $this, $job, $queue);
         }
     }
 

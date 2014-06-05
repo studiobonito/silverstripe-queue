@@ -5,6 +5,13 @@ use DateTime;
 abstract class AbstractJob
 {
     /**
+     * The injector instance.
+     *
+     * @var \Injector
+     */
+    protected $injector;
+
+    /**
      * @var mixed
      */
     protected $instance;
@@ -96,7 +103,7 @@ abstract class AbstractJob
      */
     protected function resolve($class)
     {
-        return \Injector::inst()->get($class);
+        return $this->injector->get($class);
     }
 
     /**

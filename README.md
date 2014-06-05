@@ -1,5 +1,7 @@
 # Queue Module
 
+[![Build Status](https://travis-ci.org/studiobonito/silverstripe-queue.svg?branch=master)](https://travis-ci.org/studiobonito/silverstripe-queue)
+
 ## Overview
 
 Simple multi driver queue system. This is essentially a port of the [Laravel](http://laravel.com/) queue system.

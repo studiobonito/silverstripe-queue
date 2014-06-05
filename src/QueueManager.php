@@ -1,6 +1,7 @@
 <?php namespace StudioBonito\SilverStripe\Queue;
 
 use Config;
+use Closure;
 use Injector;
 
 class QueueManager
@@ -108,10 +109,23 @@ class QueueManager
     protected function getConnector($driver)
     {
         if (isset($this->connectors[$driver])) {
-            return $this->connectors[$driver];
+            return call_user_func($this->connectors[$driver]);
         }
 
         throw new \InvalidArgumentException("No connector for [$driver]");
+    }
+
+    /**
+     * Add a queue connection resolver.
+     *
+     * @param  string  $driver
+     * @param  Closure $resolver
+     *
+     * @return void
+     */
+    public function addConnector($driver, Closure $resolver)
+    {
+        $this->connectors[$driver] = $resolver;
     }
 
     /**

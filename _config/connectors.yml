@@ -2,5 +2,6 @@ Injector:
   StudioBonito\SilverStripe\Queue\QueueManager:
     constructor:
       0:
+        sync: '%$StudioBonito\SilverStripe\Queue\Connectors\SyncConnector'
         db: '%$StudioBonito\SilverStripe\Queue\Connectors\DbConnector'
         beanstalkd: '%$StudioBonito\SilverStripe\Queue\Connectors\BeanstalkdConnector'

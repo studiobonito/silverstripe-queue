@@ -17,6 +17,7 @@ So our thanks go to [Taylor Otwell](https://twitter.com/taylorotwell) et al for 
 
 ## Supported Backends
 
+- [x] Synchronous
 - [x] SilverStripe Database
 - [x] Beanstalkd
 - [ ] IronMQ

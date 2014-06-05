@@ -30,7 +30,9 @@ So our thanks go to [Taylor Otwell](https://twitter.com/taylorotwell) et al for 
 
 Run the following to add this module as a requirement and install it via composer.
 
-	$ composer require studiobonito/silverstripe-queue
+```bash
+$ composer require studiobonito/silverstripe-queue
+```
 
 ### Manual
 

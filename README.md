@@ -86,3 +86,12 @@ class SendEmail {
     }
 }
 ```
+
+## Contributing
+
+### Unit Testing
+
+```bash
+$ composer install --prefer-dist --dev
+$ phpunit
+```

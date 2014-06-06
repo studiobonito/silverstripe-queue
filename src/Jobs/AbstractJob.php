@@ -147,6 +147,16 @@ abstract class AbstractJob
     }
 
     /**
+     * Get the current UNIX timestamp.
+     *
+     * @return int
+     */
+    public function getTime()
+    {
+        return time();
+    }
+
+    /**
      * Get the name of the queue the job belongs to.
      *
      * @return string

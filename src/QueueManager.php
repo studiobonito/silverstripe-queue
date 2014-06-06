@@ -3,6 +3,7 @@
 use Config;
 use Closure;
 use Injector;
+use StudioBonito\SilverStripe\Queue\Connectors\ConnectorInterface;
 
 class QueueManager
 {

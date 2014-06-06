@@ -39,7 +39,7 @@ class DbFailedJobProvider implements FailedJobProviderInterface
      */
     public function find($id)
     {
-        return FailedJob::get()->filter('ID', $id)->first()->toArray();
+        return FailedJob::get()->filter('ID', $id)->first()->toMap();
     }
 
     /**

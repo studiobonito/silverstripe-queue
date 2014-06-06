@@ -3,6 +3,7 @@
 use Config;
 use Closure;
 use Injector;
+use StudioBonito\SilverStripe\Queue\Connectors\ConnectorInterface;
 
 class QueueManager
 {
@@ -159,7 +160,7 @@ class QueueManager
      */
     public function getDefaultDriver()
     {
-        return $this->getConfig()->get('default');
+        return $this->getConfig()->default;
     }
 
     /**
@@ -170,7 +171,7 @@ class QueueManager
      */
     public function setDefaultDriver($name)
     {
-        $this->getConfig()->set('default', $name);
+        $this->getConfig()->default = $name;
     }
 
     /**

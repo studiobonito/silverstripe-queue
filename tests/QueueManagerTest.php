@@ -10,6 +10,27 @@ class QueueManagerTest extends \PHPUnit_Framework_TestCase
         m::close();
     }
 
+    public function testConnectionCanBePassedDirectly()
+    {
+        $connector = m::mock('StudioBonito\SilverStripe\Queue\Connectors\ConnectorInterface');
+
+        $manager = new QueueManager(
+            array('sync' => $connector)
+        );
+
+        $config = m::mock('StdClass');
+        $queue = m::mock('StdClass');
+
+        $config->shouldReceive('get')->once()->with('sync')->andReturn(array('driver' => 'sync'));
+        $connector->shouldReceive('connect')->once()->with(array('driver' => 'sync'))->andReturn($queue);
+
+        $manager->setConfig($config);
+
+        $queue->shouldReceive('setInjector')->once();
+
+        $this->assertTrue($queue === $manager->connection('sync'));
+    }
+
     public function testDefaultConnectionCanBeResolved()
     {
         $manager = new QueueManager(array());

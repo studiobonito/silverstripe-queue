@@ -1,6 +1,8 @@
 # Queue Module
 
 [![Build Status](https://travis-ci.org/studiobonito/silverstripe-queue.svg?branch=master)](https://travis-ci.org/studiobonito/silverstripe-queue)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/studiobonito/silverstripe-queue/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/studiobonito/silverstripe-queue/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/studiobonito/silverstripe-queue/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/studiobonito/silverstripe-queue/?branch=master)
 
 ## Overview
 

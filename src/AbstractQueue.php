@@ -63,6 +63,8 @@ abstract class AbstractQueue extends \Object
     /**
      * Get the current UNIX timestamp.
      *
+     * @codeCoverageIgnore
+     *
      * @return int
      */
     public function getTime()

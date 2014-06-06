@@ -1,6 +1,6 @@
 <?php namespace StudioBonito\SilverStripe\Queue\Tasks;
 
-use StudioBonito\SilverStripe\Queue\QueueManager;
+use StudioBonito\SilverStripe\Queue\Worker;
 
 class ProcessQueueTask extends \BuildTask
 {
@@ -29,7 +29,7 @@ class ProcessQueueTask extends \BuildTask
      *
      * @param \StudioBonito\SilverStripe\Queue\Worker $worker
      */
-    public function __construct(QueueManager $worker)
+    public function __construct(Worker $worker)
     {
         $this->worker = $worker;
     }

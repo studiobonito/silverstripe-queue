@@ -110,8 +110,8 @@ class Worker
     /**
      * Get the next job from the queue connection.
      *
-     * @param  \StudioBonito\SilverStripe\Queue\Queue $connection
-     * @param  string                                 $queue
+     * @param  \StudioBonito\SilverStripe\Queue\QueueInterface $connection
+     * @param  string                                          $queue
      *
      * @return \StudioBonito\SilverStripe\Queue\Jobs\JobInterface|null
      */

@@ -31,6 +31,8 @@ abstract class AbstractJob
     /**
      * Run the job.
      *
+     * @codeCoverageIgnore
+     *
      * @return void
      */
     abstract public function run();
@@ -58,6 +60,8 @@ abstract class AbstractJob
     /**
      * Release the job back into the queue.
      *
+     * @codeCoverageIgnore
+     *
      * @param  int $delay
      *
      * @return void
@@ -67,12 +71,16 @@ abstract class AbstractJob
     /**
      * Get the number of times the job has been attempted.
      *
+     * @codeCoverageIgnore
+     *
      * @return int
      */
     abstract public function attempts();
 
     /**
      * Get the raw payload string for the job.
+     *
+     * @codeCoverageIgnore
      *
      * @return string
      */
@@ -148,6 +156,8 @@ abstract class AbstractJob
 
     /**
      * Get the current UNIX timestamp.
+     *
+     * @codeCoverageIgnore
      *
      * @return int
      */

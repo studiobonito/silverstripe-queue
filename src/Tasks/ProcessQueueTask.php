@@ -55,9 +55,9 @@ class ProcessQueueTask extends \BuildTask
         $daemon = $request->getVar('daemon');
 
         if ($daemon) {
-            return $this->worker->daemon($connection, $queue, $delay, $memory, $sleep, $tries);
+            $this->worker->daemon($connection, $queue, $delay, $memory, $sleep, $tries);
         } else {
-            return $this->worker->pop($connection, $queue, $delay, $sleep, $tries);
+            $this->worker->pop($connection, $queue, $delay, $sleep, $tries);
         }
     }
 }
